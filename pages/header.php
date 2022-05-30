@@ -26,6 +26,10 @@
     
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <script src="../fstdropdown-master/fstdropdown.js"></script>
+
+    <link rel="stylesheet" href="../fstdropdown-master/fstdropdown.css">
     
 
 </head>

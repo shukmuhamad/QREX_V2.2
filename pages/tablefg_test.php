@@ -133,7 +133,7 @@
         </form>
         
         <br/><br/>
-                            <table class="table table-bordered" id="tableID" width="30%" cellspacing="0">
+                            <table class="table table-bordered" id="tableID" data-dt-idx="1" tabindex="0" width="30%" cellspacing="0">
                             <thead>
                                 <tr class="info">
                                 <th>Action</th>

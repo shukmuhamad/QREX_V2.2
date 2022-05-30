@@ -3376,7 +3376,7 @@
                                 <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto" style = "text-align:center; margin-right:10px;">
-            <label>Copyright © 2020 by QA PQC SQUAD </label>
+            <label>Powered by QA IT for QREX (PQC) v2.2</label>
           </div>
         </div>
       </footer>

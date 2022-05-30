@@ -12,14 +12,13 @@ $session_Password=$_SESSION['Password'];
 $query = "SELECT * from M_UserInfo WHERE BadgeID=? AND Password=?";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(1, $session_name);
-$stmt->bindParam(1, $session_BadgeID);
-$stmt->bindParam(1, $session_PositionKey);
-$stmt->bindParam(1, $session_PositionFullText);
-$stmt->bindParam(1, $session_Password);
+$stmt->bindParam(2, $session_BadgeID);
+$stmt->bindParam(3, $session_PositionKey);
+$stmt->bindParam(4, $session_PositionFullText);
+$stmt->bindParam(5, $session_Password);
 
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$login_session = $row['Password'];
 
 
 if (!isset($session_BadgeID)) {

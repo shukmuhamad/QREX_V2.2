@@ -2612,7 +2612,7 @@
 	<br />
   
 	<div style = "text-align:center; margin-right:10px;" class = "navbar navbar-default navbar-fixed-bottom">
-		<label>Copyright © 2020 by QA PQC SQUAD</label>
+		<label>Powered by QA IT for QREX (PQC) v2.2</label>
 	</div>
 </body>
 

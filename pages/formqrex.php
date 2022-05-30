@@ -78,11 +78,11 @@
                         </li>
                         
                         <li>
-                            <a href="tablefg_test.php"><i class="fa fa-table fa-fw"></i> All Finished Good Inspection Records (FG) Search</a>
+                            <a href="tablefg_test.php"><i class="fa fa-table fa-fw"></i> FG Table Filter</a>
                         </li>
 
                         <li>
-                            <a href="tablesfg_test.php"><i class="fa fa-table fa-fw"></i> All Semi-Finished Good Inspection Records (SFG) Search</a>
+                            <a href="tablesfg_test.php"><i class="fa fa-table fa-fw"></i> SFG Table Filter</a>
                         </li>        
                     </ul>
                 </div>
@@ -108,7 +108,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" method ="post">
+                                    <form role="form" method ="post" id="InspectionForm">
                                         <div class="form-group">
                                             <?php 
                                                 $query = $connect->prepare("SELECT * FROM DimPlant");
@@ -119,14 +119,19 @@
                                             <label>Factory:</label>
                                             <select class="form-control fstdropdown-select" id="PlantKey" name="PlantKey" required>
                                                 <option name="PlantKey" value=""> Factory</option>
-                                                <?php foreach ($fetch as $row) { ?>
-                                                <option value="<?php echo $row['PlantKey'];?>"><?php echo $row['PlantName']; }?></option>
+                                                <?php foreach ($fetch as $row){
+                                                    if($row['PlantName'] == 'F37'){
+                                                    }else{?>
+                                                    <option name="factory_name[]" value="<?php echo $row['PlantKey'];?>">
+                                                            <?php echo $row['PlantName']; ?>
+                                                    </option>
+                                                <?php } } ?>
                                             </select>
                                         </div>
                                     
                                         <div class="form-group">
                                             <label>Inspection Date:</label>
-                                            <input class="form-control" type="datetime-local" name="RecordCreatedDateTime" id="RecordCreatedDateTime" max="<?php echo date('Y-m-d\TH:i:s'); ?>" value="<?php echo date('Y-m-d\TH:i:s'); ?>">
+                                            <input class="form-control" type="date" name="RecordCreatedDateTime" id="RecordCreatedDateTime" max="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>">
                                         </div>
 
                                         <div class="form-group">
@@ -171,7 +176,7 @@
                                         
                                         <div class="form-group">
                                             <?php 
-                                            $query = $connect->prepare("SELECT InspectionPlanName FROM M_InspectionPlan");
+                                            $query = $connect->prepare("SELECT * FROM M_InspectionPlan");
                                             $query->execute();
                                             $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
                                             ?>
@@ -297,7 +302,7 @@
                                     <div class="form-group">
                                         <th scope="col" class="info"><label>Product:</label></th>
                                         <?php 
-                                            $query = $connect->prepare("SELECT GloveProductTypeName FROM M_GloveProductType ORDER BY GloveProductTypeName ASC");
+                                            $query = $connect->prepare("SELECT GloveProductTypeKey, GloveProductTypeName FROM M_GloveProductType ORDER BY GloveProductTypeName ASC");
                                             $query->execute();
                                             $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
                                         ?>
@@ -312,7 +317,7 @@
                                     <div class="form-group">
                                         <th scope="col" class="info"><label>Product Code:</label>
                                         <?php 
-                                            $query = $connect->prepare("SELECT GloveCodeLong FROM M_GloveCode ORDER BY GloveCodeLong ASC");
+                                            $query = $connect->prepare("SELECT GloveCodeKey, GloveCodeLong FROM M_GloveCode ORDER BY GloveCodeLong ASC");
                                             $query->execute();
                                             $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
                                         ?>
@@ -327,7 +332,7 @@
                                     <div class="form-group">
                                         <th scope="col" class="info"><label>Colour:</label>
                                         <?php 
-                                            $query = $connect->prepare("SELECT GloveColourName FROM M_GloveColour ORDER BY GloveColourName ASC");
+                                            $query = $connect->prepare("SELECT GloveColourKey, GloveColourName FROM M_GloveColour ORDER BY GloveColourName ASC");
                                             $query->execute();
                                             $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
                                         ?>
@@ -348,7 +353,7 @@
                                         <tr>
                                             <td><select class="form-control fstdropdown-select" id="ProductionLineKey1" name="ProductionLineKey1" required>
                                             <?php 
-                                                $query = $connect->prepare("SELECT ProductionLineName FROM DimProductionLine ORDER BY ProductionLineName ASC");
+                                                $query = $connect->prepare("SELECT ProductionLineKey, ProductionLineName FROM DimProductionLine ORDER BY ProductionLineName ASC");
                                                 $query->execute();
                                                 $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
                                             ?>
@@ -370,7 +375,7 @@
                                         <td>
                                             <select class="form-control fstdropdown-select" id="ProductionLineKey2" name="ProductionLineKey2">
                                             <?php 
-                                                $query = $connect->prepare("SELECT ProductionLineName FROM DimProductionLine");
+                                                $query = $connect->prepare("SELECT ProductionLineKey, ProductionLineName FROM DimProductionLine");
                                                 $query->execute();
                                                 $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
                                             ?>
@@ -392,7 +397,7 @@
                                         <tr> 
                                         <td><select class="form-control fstdropdown-select" id="ProductionLineKey3" name="ProductionLineKey3">
                                             <?php 
-                                                $query = $connect->prepare("SELECT ProductionLineName FROM DimProductionLine");
+                                                $query = $connect->prepare("SELECT ProductionLineKey, ProductionLineName FROM DimProductionLine");
                                                 $query->execute();
                                                 $fetch = $query->fetchAll(PDO::FETCH_ASSOC);
                                             ?>
@@ -678,7 +683,6 @@
                                     </tr>
                                 </table>                                            
                                 
-                                    
                                     <table class="table table-bordered">
                                          <tr>
                                          <th style=" vertical-align: middle;" class="info" rowspan="2" width="30%">Donning & Tearing:</th>
@@ -2243,7 +2247,7 @@
                         <!-- /.panel-heading -->
                         
                                     
-                                   <center><button type="submit" name="submit" class="btn btn-primary">SAVE</button></center></br>
+                                   <button type="submit" name="submit" form="InspectionForm" class="btn btn-primary">SAVE</button></br>
                                            
                                         <!--<a href="production_detail.php" class="btn btn-primary"> Next</a>-->
 
@@ -2258,20 +2262,20 @@
     <!-- Modal: Display when total defect more than sample size, resets all fields-->
     <div class="modal fade" id="errorModal" role="dialog">
         <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Error</h4>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                <div class="alert alert-danger">
+                    <strong> Total defect value more than sample size. Please enter again. </strong>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-            <div class="alert alert-danger">
-                <strong> Total defect value more than sample size. Please enter again. </strong>
-            </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
         </div>
     </div>
     </div>
@@ -2281,32 +2285,19 @@
     
  									</div>
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                                
-
                                 </div></div></div>
-                                <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto" style = "text-align:center; margin-right:10px;">
-            <label>Copyright © 2020 by QA PQC SQUAD V2.2</label>
-          </div>
-        </div>
-      </footer>
-                                <!-- /.col-lg-6 (nested) -->
-                            </div>
-                            <!-- /.row (nested) -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto" style = "text-align:center; margin-right:10px;">
+                    <label>Powered by QA IT for QREX (PQC) v2.2</label>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
-            
-            
-        
-        <!-- /#page-wrapper -->
+        </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     
     <!-- jQuery -->
 
